@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My App</title>
+
+  {#<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">#}
+
+  <script src="{{ STATIC_URL }}js/libs/socket.io.min.js"></script>
+</head>
+<body>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+<script>
+$().ready(function() {
+  // just a bunch of logging
+  socket = io.connect('');
+
+  socket.on("myevent", function(e) {
+    console.log("<myevent> event", arguments);
+  });
+  socket.on("message", function(e) {
+    console.log("Message", e);
+  });
+
+  socket.on("joined", function(e) {
+    console.log("joined", arguments);
+  });
+
+  socket.on("connect", function(e) {
+    console.log("Connected", arguments);
+    socket.emit('subscribe', 'default_room');
+  });
+
+  socket.on("disconnect", function(e) {
+    console.log("Disconnected", arguments);
+  });
+
+  var source = new EventSource('/sse/');
+
+  function log() {
+    console.log(arguments);
+  }
+
+  source.onopen = function() {
+    console.log(arguments);
+  };
+
+  source.onerror = function () {
+    console.log(arguments);
+  };
+
+  source.addEventListener('connections', log, false);
+  source.addEventListener('requests', log, false);
+  source.addEventListener('myevent', log, false);
+  source.addEventListener('uptime', log, false);
+
+  source.onmessage = function() {
+    console.log(arguments);
+  };
+});
+
+</script>
+
+</body>
+</html>

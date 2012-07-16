@@ -31,20 +31,23 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         self.emit('joined', room)
 
     def on_myevent(self, room, *args):
-        self.emit_to_room_with_echo(room, 'myevent', *args)
+        self.emit_to_room(room, 'myevent', *args)
 
-    def emit_to_room_with_echo(self, room, event, *args):
+    def emit_to_room(self, room, event, *args):
         """
         This is almost the same as ``.emit_to_room()`` on the parent class,
-        but it doesn't exclude the current session from receiving the event.
+        but it sends the event only over the current socket.
+
+        This is to avoid a problem when there are more client than workers, and
+        a single message can get delivered multiple times.
         """
         pkt = dict(type="event",
                    name=event,
                    args=args,
                    endpoint=self.ns_name)
         room_name = self._get_room_name(room)
-        for sessid, socket in self.socket.server.sockets.iteritems():
-            if 'rooms' not in socket.session:
-                continue
-            if room_name in socket.session['rooms']:  # This is the only line different from ``.emit_to_room()``
-                socket.send_packet(pkt)
+
+        if 'rooms' not in self.socket.session:
+            return
+        if room_name in self.socket.session['rooms']:
+            self.socket.send_packet(pkt)

@@ -32,7 +32,6 @@ $().ready(function() {
   source.addEventListener('connections', log, false);
   source.addEventListener('requests', log, false);
   source.addEventListener('myevent', log, false);
-  source.addEventListener('uptime', log, false);
 
   source.onmessage = function() {
     console.log(arguments);

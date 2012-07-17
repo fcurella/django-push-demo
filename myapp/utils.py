@@ -16,6 +16,9 @@ CONNECTION_KWARGS = getattr(settings, 'WEBSOCKET_REDIS_BROKER', {})
 
 
 class ConnectionPoolManager(object):
+    """
+    A singleton that contains and retrieves redis ``ConnectionPool``s according to the connection settings.
+    """
     pools = {}
 
     @classmethod
@@ -41,6 +44,9 @@ class ConnectionPoolManager(object):
 
 
 def redis_connection():
+    """
+    Returns a redis connection from one of our pools.
+    """
     pool = ConnectionPoolManager.connection_pool(**CONNECTION_KWARGS)
     return Redis(connection_pool=pool)
 

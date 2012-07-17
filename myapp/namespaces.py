@@ -51,3 +51,30 @@ class MyNamespace(BaseNamespace, RoomsMixin):
             return
         if room_name in self.socket.session['rooms']:
             self.socket.send_packet(pkt)
+
+
+class MyNamespaceThreadFriendly(MyNamespace):
+    rooms = set()
+
+    def initialize(self):
+        self.r = redis_connection().pubsub()
+
+    def listener(self, room):
+        self.r.subscribe(['socketio_%s' % room for room in self.rooms])
+
+        for m in self.r.listen():
+            if m['type'] == 'message':
+                data = json.loads(m['data'])
+                self.process_event(data)
+
+    def join(self, room):
+        """
+        Kills the existing listener, and starts a new one subscribing to the new channel.
+        """
+        super(MyNamespaceThreadFriendly, self).join(room)
+        self.rooms.add(room)
+        if getattr(self, 'listener_greenlet', False):
+            self.listener_greenlet.kill()
+
+        self.listener_greenlet = self.spawn(self.listener, room)
+        self.emit('joined', room)

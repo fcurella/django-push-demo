@@ -12,8 +12,32 @@
   <script src="{{ STATIC_URL }}js/libs/eventsource.js"></script>
 
 <script>
+//window.addEventListener('load', function() {
 $().ready(function() {
   // just a bunch of logging
+  var source = new EventSource('/sse/');
+
+  function log() {
+    console.log(arguments);
+  }
+
+  source.onopen = function() {
+    console.log(arguments);
+  };
+
+  source.onerror = function () {
+    console.log(arguments);
+  };
+
+  source.addEventListener('connections', log, false);
+  source.addEventListener('requests', log, false);
+  source.addEventListener('myevent', log, false);
+  source.addEventListener('uptime', log, false);
+
+  source.onmessage = function() {
+    console.log(arguments);
+  };
+
   socket = io.connect('', {
     transports: ['websocket', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
   });
@@ -38,28 +62,6 @@ $().ready(function() {
     console.log("Disconnected", arguments);
   });
 
-  var source = new EventSource('/sse/');
-
-  function log() {
-    console.log(arguments);
-  }
-
-  source.onopen = function() {
-    console.log(arguments);
-  };
-
-  source.onerror = function () {
-    console.log(arguments);
-  };
-
-  source.addEventListener('connections', log, false);
-  source.addEventListener('requests', log, false);
-  source.addEventListener('myevent', log, false);
-  source.addEventListener('uptime', log, false);
-
-  source.onmessage = function() {
-    console.log(arguments);
-  };
 });
 
 </script>

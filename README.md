@@ -1,4 +1,4 @@
-For me infromation, see the [full article](curella.org/blog/2012/jul/17/django-push-using-server-sent-events-and-websocket/).
+For me information, see the [full article](curella.org/blog/2012/jul/17/django-push-using-server-sent-events-and-websocket/).
 
 ### Installation
 

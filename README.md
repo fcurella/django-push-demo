@@ -1,3 +1,5 @@
+For me infromation, see the [full article](curella.org/blog/2012/jul/17/django-push-using-server-sent-events-and-websocket/).
+
 ### Installation
 
 1. Create a virtualenv and download the project.

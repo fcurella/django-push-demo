@@ -5,6 +5,7 @@ from socketio import socketio_manage
 from myapp.namespaces import MyNamespace
 from myapp.utils import redis_connection, emit_to_channel
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 
 class HomePage(TemplateView):
@@ -16,6 +17,7 @@ def incr(request):
     r = redis_connection()
     count = r.incr('sheeple')
     emit_to_channel('default_room', 'myevent', count)
+    return HttpResponse()
 
 
 @csrf_exempt
@@ -23,6 +25,7 @@ def delete(request):
     r = redis_connection()
     r.delete('sheeple')
     emit_to_channel('default_room', 'myevent', 0)
+    return HttpResponse()
 
 
 def socketio_service(request):

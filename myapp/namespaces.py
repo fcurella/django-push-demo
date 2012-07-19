@@ -30,27 +30,8 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         self.spawn(self.listener, room)
         self.emit('joined', room)
 
-    def on_myevent(self, room, *args):
-        self.emit_to_room(room, 'myevent', *args)
-
-    def emit_to_room(self, room, event, *args):
-        """
-        This is almost the same as ``.emit_to_room()`` on the parent class,
-        but it sends the event only over the current socket.
-
-        This is to avoid a problem when there are more client than workers, and
-        a single message can get delivered multiple times.
-        """
-        pkt = dict(type="event",
-                   name=event,
-                   args=args,
-                   endpoint=self.ns_name)
-        room_name = self._get_room_name(room)
-
-        if 'rooms' not in self.socket.session:
-            return
-        if room_name in self.socket.session['rooms']:
-            self.socket.send_packet(pkt)
+    def on_myevent(self, *args):
+        self.emit('myevent', *args)
 
 
 class MyNamespaceThreadFriendly(MyNamespace):

@@ -30,5 +30,5 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         self.spawn(self.listener, room)
         self.emit('joined', room)
 
-    def on_myevent(self, room, *args):
-        self.emit_to_room(room, 'myevent', *args)
+    def on_myevent(self, *args):
+        self.emit('myevent', *args)

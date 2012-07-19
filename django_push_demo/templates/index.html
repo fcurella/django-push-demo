@@ -34,9 +34,9 @@ $().ready(function() {
     transports: ['websocket', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
   });
 
-  socket.on("myevent", function(e) {
+  socket.on("myevent", function(channel, data) {
     console.log("<myevent> event", arguments);
-    $('#messages').append("<li>" + arguments[0] + " sheeps jumped over the fence...</li>");
+    $('#messages').append("<li>" + data + " sheeps jumped over the fence...</li>");
   });
   socket.on("message", function(e) {
     console.log("Message", e);

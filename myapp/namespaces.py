@@ -1,10 +1,9 @@
 from socketio.namespace import BaseNamespace
-from socketio.mixins import RoomsMixin
 from myapp.utils import redis_connection
 import json
 
 
-class MyNamespace(BaseNamespace, RoomsMixin):
+class MyNamespace(BaseNamespace):
     def listener(self, room):
         r = redis_connection().pubsub()
         r.subscribe('socketio_%s' % room)
@@ -26,7 +25,6 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         I've tried to spawn just once, but calling ``redis.listen()`` without a ``redis.subscribe()``
         causes the listener loop to exit immediately.
         """
-        super(MyNamespace, self).join(room)
         self.spawn(self.listener, room)
         self.emit('joined', room)
 
@@ -34,7 +32,7 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         self.emit('myevent', *args)
 
 
-class MyNamespaceThreadFriendly(MyNamespace):
+class MyNamespaceThreadFriendly(BaseNamespace):
     rooms = set()
 
     def initialize(self):
@@ -48,6 +46,10 @@ class MyNamespaceThreadFriendly(MyNamespace):
                 data = json.loads(m['data'])
                 self.process_event(data)
 
+    def on_subscribe(self, *args):
+        for channel in args:
+            self.join(channel)
+
     def join(self, room):
         """
         Kills the existing listener, and starts a new one subscribing to the new channel.
@@ -59,3 +61,6 @@ class MyNamespaceThreadFriendly(MyNamespace):
 
         self.listener_greenlet = self.spawn(self.listener, room)
         self.emit('joined', room)
+
+    def on_myevent(self, *args):
+        self.emit('myevent', *args)

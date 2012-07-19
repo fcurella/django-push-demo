@@ -1,10 +1,9 @@
 from socketio.namespace import BaseNamespace
-from socketio.mixins import RoomsMixin
 from myapp.utils import redis_connection
 import json
 
 
-class MyNamespace(BaseNamespace, RoomsMixin):
+class MyNamespace(BaseNamespace):
     def listener(self, room):
         r = redis_connection().pubsub()
         r.subscribe('socketio_%s' % room)
@@ -26,7 +25,6 @@ class MyNamespace(BaseNamespace, RoomsMixin):
         I've tried to spawn just once, but calling ``redis.listen()`` without a ``redis.subscribe()``
         causes the listener loop to exit immediately.
         """
-        super(MyNamespace, self).join(room)
         self.spawn(self.listener, room)
         self.emit('joined', room)
 

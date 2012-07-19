@@ -6,6 +6,10 @@
 
 </head>
 <body>
+  <input id="delete" type="button" value="reset">
+  <input id="incr" type="button" value="add sheep">
+  <ul id="messages">
+  </ul>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.7.1.min.js"><\/script>')</script>
   <script src="{{ STATIC_URL }}js/libs/socket.io.min.js"></script>
@@ -14,35 +18,25 @@
 <script>
 //window.addEventListener('load', function() {
 $().ready(function() {
+
+  $('#incr').click(function(e) {
+    e.preventDefault();
+    $.post('/incr/');
+  });
+
+  $('#delete').click(function(e) {
+    e.preventDefault();
+    $.post('/delete/');
+  });
+
   // just a bunch of logging
-  var source = new EventSource('/sse/');
-
-  function log() {
-    console.log(arguments);
-  }
-
-  source.onopen = function() {
-    console.log(arguments);
-  };
-
-  source.onerror = function () {
-    console.log(arguments);
-  };
-
-  source.addEventListener('connections', log, false);
-  source.addEventListener('requests', log, false);
-  source.addEventListener('myevent', log, false);
-
-  source.onmessage = function() {
-    console.log(arguments);
-  };
-
   socket = io.connect('', {
     transports: ['websocket', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
   });
 
   socket.on("myevent", function(e) {
     console.log("<myevent> event", arguments);
+    $('#messages').append("<li>" + arguments[0] + " sheeps jumped over the fence...</li>");
   });
   socket.on("message", function(e) {
     console.log("Message", e);

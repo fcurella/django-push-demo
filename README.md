@@ -28,3 +28,7 @@ To send a SocketIO packet from the server to the browser:
 To send a SocketIO packet from the browser to the server:
 
     > socket.emit('myevent', 'default_room', 'text')
+
+### License
+
+Released under the MIT License.

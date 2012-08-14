@@ -29,9 +29,9 @@ $().ready(function() {
     $.post('/delete/');
   });
 
+  WEB_SOCKET_SWF_LOCATION = '{{ STATIC_URL }}js/libs/WebSocketMain.swf';
   // just a bunch of logging
   socket = io.connect('', {
-    transports: ['websocket', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
   });
 
   socket.on("myevent", function(channel, data) {

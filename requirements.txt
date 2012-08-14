@@ -2,7 +2,7 @@ Django==1.4
 gevent==0.13.7
 hg+ssh://hg@bitbucket.org/Jeffrey/gevent-websocket#egg=gevent-websocket
 greenlet==0.4.0
-gevent-socketio==0.3.5-rc2
+git+git://github.com/abourget/gevent-socketio.git#egg=gevent-socketio
 gunicorn==0.14.3
 redis==2.4.13
 sse==1.0

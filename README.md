@@ -1,4 +1,4 @@
-For me information, see the [full article](curella.org/blog/2012/jul/17/django-push-using-server-sent-events-and-websocket/).
+For me information, see the [full article](http://curella.org/blog/2012/jul/17/django-push-using-server-sent-events-and-websocket/).
 
 ### Installation
 
@@ -15,7 +15,7 @@ For me information, see the [full article](curella.org/blog/2012/jul/17/django-p
 2. Open the javascript console.
 3. Open a python interpreter (within your virtualenv).
 
-To send a Server Side Event:
+To send a Server-Sent Event:
 
     >>> from django_sse.redisqueue import send_event
     >>> send_event('myevent', 'text')

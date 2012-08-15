@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^incr/$', views.incr, name='incr'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
     url(r'^delete/$', views.delete, name='delete'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
     url(r'^socket\.io', views.socketio_service, name='socketio_service'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
+    url(r'^sse/$', views.SSE.as_view(), name='sse'),
     url(r'^$', views.HomePage.as_view(), name='homepage'),
 )
 urlpatterns += staticfiles_urlpatterns()

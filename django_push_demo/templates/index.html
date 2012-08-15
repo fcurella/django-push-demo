@@ -18,7 +18,30 @@
 <script>
 //window.addEventListener('load', function() {
 $().ready(function() {
+  // SSE
+  var source = new EventSource('/sse/');
+ 
+  function log() {
+    console.log(arguments);
+  }
+ 
+  source.onopen = function() {
+    console.log(arguments);
+  };
+ 
+  source.onerror = function () {
+    console.log(arguments);
+  };
 
+  source.onmessage = function() {
+    console.log(arguments);
+  };
+
+  source.addEventListener('connections', log, false);
+  source.addEventListener('requests', log, false);
+  source.addEventListener('myevent', log, false);
+
+  // Socket.io
   $('#incr').click(function(e) {
     e.preventDefault();
     $.post('/incr/');
@@ -30,7 +53,7 @@ $().ready(function() {
   });
 
   WEB_SOCKET_SWF_LOCATION = '{{ STATIC_URL }}js/libs/WebSocketMain.swf';
-  // just a bunch of logging
+
   socket = io.connect('', {
   });
 

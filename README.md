@@ -9,7 +9,7 @@ For me information, see the [full article](http://curella.org/blog/django-push-u
 
 ### Running the project
 
-    $ python manage.py run_gunicorn -c config/gunicorn
+    $ gunicorn_django -c config/gunicorn
 
 1. Open your browser at ``http://localhost:8000/``.
 2. Open the javascript console.

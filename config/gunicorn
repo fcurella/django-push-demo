@@ -3,7 +3,7 @@ from os import environ
 from gevent import monkey
 monkey.patch_all()
 
-bind = "0.0.0.0:8000"
+bind = "0.0.0.0:%s" % environ['PORT']
 workers = 2
 worker_class = "socketio.sgunicorn.GeventSocketIOWorker"
 

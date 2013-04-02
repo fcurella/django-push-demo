@@ -1,4 +1,6 @@
 # Create your views here.
+import json
+
 from django.views.generic import TemplateView
 from django_sse.redisqueue import RedisQueueView
 from django_sse.redisqueue import send_event
@@ -28,7 +30,7 @@ def incr(request):
 def sse_incr(request):
     r = redis_connection()
     count = r.incr('sheeple')
-    send_event("myevent", str(count))
+    send_event("myevent", json.dumps(count))
     return HttpResponse('OK')
 
 
@@ -44,5 +46,5 @@ def delete(request):
 def sse_delete(request):
     r = redis_connection()
     r.delete('sheeple')
-    send_event("myevent", '0')
+    send_event("myevent", json.dumps(0))
     return HttpResponse()

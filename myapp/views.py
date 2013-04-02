@@ -1,6 +1,7 @@
 # Create your views here.
 from django.views.generic import TemplateView
 from django_sse.redisqueue import RedisQueueView
+from django_sse.redisqueue import send_event
 
 from myapp.utils import redis_connection, emit_to_channel
 from django.views.decorators.csrf import csrf_exempt
@@ -24,6 +25,14 @@ def incr(request):
 
 
 @csrf_exempt
+def sse_incr(request):
+    r = redis_connection()
+    count = r.incr('sheeple')
+    send_event("myevent", str(count))
+    return HttpResponse('OK')
+
+
+@csrf_exempt
 def delete(request):
     r = redis_connection()
     r.delete('sheeple')
@@ -31,3 +40,9 @@ def delete(request):
     return HttpResponse()
 
 
+@csrf_exempt
+def sse_delete(request):
+    r = redis_connection()
+    r.delete('sheeple')
+    send_event("myevent", '0')
+    return HttpResponse()

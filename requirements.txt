@@ -8,3 +8,4 @@ redis==2.7.2
 sse==1.2
 git+git://github.com/niwibe/django-sse.git#egg=django_sse
 simplejson==3.1.2
+dj_database_url

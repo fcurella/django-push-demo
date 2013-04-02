@@ -2,8 +2,6 @@
 from django.views.generic import TemplateView
 from django_sse.redisqueue import RedisQueueView
 
-from socketio import socketio_manage
-from myapp.namespaces import MyNamespace
 from myapp.utils import redis_connection, emit_to_channel
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
@@ -33,7 +31,3 @@ def delete(request):
     return HttpResponse()
 
 
-def socketio_service(request):
-    socketio_manage(request.environ, namespaces={'': MyNamespace}, request=request)
-
-    return {}

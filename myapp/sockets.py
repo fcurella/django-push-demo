@@ -1,8 +1,10 @@
 from socketio.namespace import BaseNamespace
+from socketio.sdjango import namespace
 from myapp.utils import redis_connection
 import json
 
 
+@namespace('')
 class MyNamespace(BaseNamespace):
     def listener(self, room):
         r = redis_connection().pubsub()
@@ -39,7 +41,7 @@ class MyNamespaceThreadFriendly(BaseNamespace):
         self.r = redis_connection().pubsub()
 
     def listener(self, room):
-        self.r.subscribe(['socketio_%s' % room for room in self.rooms])
+        self.r.subscribe(['socketio_%s' % r for r in self.rooms])
 
         for m in self.r.listen():
             if m['type'] == 'message':

@@ -2,6 +2,10 @@ from django.conf.urls import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from myapp import views
 
+import socketio.sdjango
+
+socketio.sdjango.autodiscover()
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -16,9 +20,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^incr/$', views.incr, name='incr'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
-    url(r'^delete/$', views.delete, name='delete'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
-    url(r'^socket\.io', views.socketio_service, name='socketio_service'),  # socket.io uses the well-known URL `/socket.io/` for its protocol
+    url(r'^incr/$', views.incr, name='incr'),
+    url(r'^delete/$', views.delete, name='delete'),
+    url(r"^socket\.io", include(socketio.sdjango.urls)),
     url(r'^sse/$', views.SSE.as_view(), name='sse'),
     url(r'^$', views.HomePage.as_view(), name='homepage'),
 )

@@ -1,6 +1,7 @@
+psycopg2
 Django==1.5.1
 gevent==0.13.8
-hg+ssh://hg@bitbucket.org/Jeffrey/gevent-websocket#egg=gevent-websocket
+gevent-websocket==0.3.6
 greenlet==0.4.0
 git+git://github.com/abourget/gevent-socketio.git#egg=gevent-socketio
 gunicorn==0.17.2

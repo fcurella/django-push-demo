@@ -20,9 +20,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^incr/$', views.incr, name='incr'),
-    url(r'^delete/$', views.delete, name='delete'),
-    url(r"^socket\.io", include(socketio.sdjango.urls)),
     url(r'^sse_incr/$', views.sse_incr, name='sse_incr'),
     url(r'^sse_delete/$', views.sse_delete, name='see_delete'),
     url(r'^sse/$', views.SSE.as_view(), name='sse'),

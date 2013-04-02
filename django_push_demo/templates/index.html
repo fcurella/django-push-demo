@@ -6,15 +6,13 @@
 
 </head>
 <body>
-  <input id="delete" type="button" value="reset">
-  <input id="incr" type="button" value="add sheep">
   <input id="sse_delete" type="button" value="reset (sse)">
   <input id="sse_incr" type="button" value="add sheep (sse)">
   <ul id="messages">
   </ul>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-1.7.1.min.js"><\/script>')</script>
-  <script src="{{ STATIC_URL }}js/libs/socket.io.min.js"></script>
+  {#<script src="{{ STATIC_URL }}js/libs/socket.io.min.js"></script>#}
   <script src="{{ STATIC_URL }}js/libs/eventsource.js"></script>
 
 <script>
@@ -55,6 +53,7 @@ $().ready(function() {
     $.post('/sse_delete/');
   });
 
+/*
   
   // Socket.io
   $('#incr').click(function(e) {
@@ -92,7 +91,7 @@ $().ready(function() {
   socket.on("disconnect", function(e) {
     console.log("Disconnected", arguments);
   });
-
+*/
 });
 
 </script>

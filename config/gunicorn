@@ -5,10 +5,4 @@ monkey.patch_all()
 
 bind = "0.0.0.0:8000"
 workers = 2
-worker_class = "socketio.sgunicorn.GeventSocketIOWorker"
-
-
-def pre_fork(server, worker):
-    if environ.get('POLICY_SERVER', None) is None:
-        environ['POLICY_SERVER'] = 'true'
-        worker.policy_server = True
+worker_class = "gevent"

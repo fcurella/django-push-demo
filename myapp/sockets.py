@@ -56,7 +56,6 @@ class MyNamespaceThreadFriendly(BaseNamespace):
         """
         Kills the existing listener, and starts a new one subscribing to the new channel.
         """
-        super(MyNamespaceThreadFriendly, self).join(room)
         self.rooms.add(room)
         if getattr(self, 'listener_greenlet', False):
             self.listener_greenlet.kill()

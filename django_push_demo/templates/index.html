@@ -43,7 +43,7 @@ $().ready(function() {
   source.addEventListener('requests', log, false);
   source.addEventListener('myevent', function(e) {
         data = JSON.parse(e.data);
-        $('#messages').append("<li>" + data + " sheeps jumped over the fence...</li>");
+        $('#messages').append("<li>" + data + " sheep jumped over the fence...</li>");
   }, false);
 
   $('#sse_incr').click(function(e) {

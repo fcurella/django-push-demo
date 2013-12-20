@@ -18,44 +18,6 @@
 <script>
 //window.addEventListener('load', function() {
 $().ready(function() {
-  /*
-  // SSE
-  var source = new EventSource('/sse/');
- 
-  function log() {
-    console.log(arguments);
-  }
- 
-  source.onopen = function() {
-    console.log(arguments);
-  };
- 
-  source.onerror = function () {
-    console.log(arguments);
-  };
-
-  source.onmessage = function() {
-    console.log(arguments);
-  };
-
-  source.addEventListener('connections', log, false);
-  source.addEventListener('requests', log, false);
-  source.addEventListener('myevent', function(e) {
-        data = JSON.parse(e.data);
-        $('#messages').append("<li>" + data + " sheeps jumped over the fence...</li>");
-  }, false);
-
-  $('#sse_incr').click(function(e) {
-    e.preventDefault();
-    $.post('/sse_incr/');
-  });
-
-  $('#sse_delete').click(function(e) {
-    e.preventDefault();
-    $.post('/sse_delete/');
-  });
-
-  */
   // Socket.io
   $('#incr').click(function(e) {
     e.preventDefault();

@@ -27,24 +27,8 @@ def incr(request):
 
 
 @csrf_exempt
-def sse_incr(request):
-    r = redis_connection()
-    count = r.incr('sheeple')
-    send_event("myevent", json.dumps(count))
-    return HttpResponse('OK')
-
-
-@csrf_exempt
 def delete(request):
     r = redis_connection()
     r.delete('sheeple')
     emit_to_channel('default_room', 'myevent', 0)
-    return HttpResponse()
-
-
-@csrf_exempt
-def sse_delete(request):
-    r = redis_connection()
-    r.delete('sheeple')
-    send_event("myevent", json.dumps(0))
     return HttpResponse()

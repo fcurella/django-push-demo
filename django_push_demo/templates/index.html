@@ -33,6 +33,16 @@ $().ready(function() {
   socket = io.connect('', {
   });
 
+  socket.on("system_message", function(data) {
+    $('#messages').append("<p>" + data + "</p>");
+  });
+
+  socket.on("connect", function(e) {
+    console.log("Connected", arguments);
+    socket.emit('subscribe', 'default_room');
+    socket.emit('system_message', 'hello!');
+  });
+
   socket.on("myevent", function(channel, data) {
     console.log("<myevent> event", arguments);
     $('#messages').append("<li>" + data + " sheeps jumped over the fence...</li>");
@@ -43,11 +53,6 @@ $().ready(function() {
 
   socket.on("joined", function(e) {
     console.log("joined", arguments);
-  });
-
-  socket.on("connect", function(e) {
-    console.log("Connected", arguments);
-    socket.emit('subscribe', 'default_room');
   });
 
   socket.on("disconnect", function(e) {

@@ -33,3 +33,5 @@ class MyNamespace(BaseNamespace):
     def on_myevent(self, *args):
         self.emit('myevent', *args)
 
+    def on_system_message(self, *args):
+        self.emit('system_message', *args)

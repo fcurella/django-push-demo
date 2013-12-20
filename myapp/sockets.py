@@ -33,36 +33,3 @@ class MyNamespace(BaseNamespace):
     def on_myevent(self, *args):
         self.emit('myevent', *args)
 
-
-class MyNamespaceThreadFriendly(BaseNamespace):
-    rooms = set()
-
-    def initialize(self):
-        self.r = redis_connection().pubsub()
-
-    def listener(self, room):
-        self.r.subscribe(['socketio_%s' % r for r in self.rooms])
-
-        for m in self.r.listen():
-            if m['type'] == 'message':
-                data = json.loads(m['data'])
-                self.process_event(data)
-
-    def on_subscribe(self, *args):
-        for channel in args:
-            self.join(channel)
-
-    def join(self, room):
-        """
-        Kills the existing listener, and starts a new one subscribing to the new channel.
-        """
-        super(MyNamespaceThreadFriendly, self).join(room)
-        self.rooms.add(room)
-        if getattr(self, 'listener_greenlet', False):
-            self.listener_greenlet.kill()
-
-        self.listener_greenlet = self.spawn(self.listener, room)
-        self.emit('joined', room)
-
-    def on_myevent(self, *args):
-        self.emit('myevent', *args)

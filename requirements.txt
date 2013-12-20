@@ -1,10 +1,9 @@
 Django==1.5.1
-gevent==0.13.8
-hg+ssh://hg@bitbucket.org/Jeffrey/gevent-websocket#egg=gevent-websocket
-greenlet==0.4.0
+gevent==1.0
+gevent-websocket==0.9
+greenlet==0.4.1
 git+git://github.com/abourget/gevent-socketio.git#egg=gevent-socketio
-gunicorn==0.17.2
-redis==2.7.2
-sse==1.2
-git+git://github.com/niwibe/django-sse.git#egg=django_sse
-simplejson==3.1.2
+gunicorn==18.0
+redis==2.8.0
+simplejson==3.3.1
+dj_database_url==0.0.2

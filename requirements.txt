@@ -3,7 +3,7 @@ gevent==1.0
 gevent-websocket==0.9
 greenlet==0.4.1
 git+git://github.com/abourget/gevent-socketio.git#egg=gevent-socketio
-gunicorn==18.0
+gunicorn==19.5.0
 redis==2.8.0
 sse==1.2
 git+git://github.com/niwibe/django-sse.git#egg=django_sse
